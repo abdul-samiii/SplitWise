@@ -1,4 +1,7 @@
+import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
+
+import { RedirectWithoutLogin } from '../auth'
 import {
   Activity,
   Expense,
@@ -9,9 +12,12 @@ import {
 
 const Home = () => {
   const location = useLocation()
-  console.log(location)
+  const data = useSelector(item => item.authReducer.payload)
+  console.log('testingggg ', data)
+
   return (
     <div className='flex'>
+      <RedirectWithoutLogin />
       <Sidebar />
       <div>
         <div className='md:ml-24 md:mt-10 md:mr-10'>

@@ -1,7 +1,11 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../store/actions'
 
 import { Top } from './AuthComponents'
+import RedirectWithLogin from './RedirectWithLogin'
 
 const Signup = () => {
   const [name, setName] = useState()
@@ -9,10 +13,12 @@ const Signup = () => {
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
 
+  const dispatch = useDispatch()
+  const { SignupWithEmail } = bindActionCreators(ActionCreators, dispatch)
   const handleRegister = () => {
     if (name && email && password) {
       if (password === confirmPassword) {
-        alert('Register Success')
+        SignupWithEmail(email, password)
       } else {
         alert('Password donot Match!!')
       }
@@ -23,6 +29,7 @@ const Signup = () => {
 
   return (
     <div className='h-screen flex flex-col'>
+      <RedirectWithLogin />
       <div className='sm:shadow-lg sm:border-[1px] sm:m-auto h-fit sm:w-[55vh] p-10'>
         <Top />
         <div className='flex justify-center py-4'>

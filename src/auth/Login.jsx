@@ -1,22 +1,28 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../store/actions'
 
 import { Top } from './AuthComponents'
+import RedirectWithLogin from './RedirectWithLogin'
 
 const Login = () => {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-
-  const navigate = useNavigate()
+  // console.log('here', token)
+  const dispatch = useDispatch()
+  const { SigninWithEmail } = bindActionCreators(ActionCreators, dispatch)
   const handleSignin = () => {
-    if (email && password) {
-      navigate('/')
+    if (email || password) {
+      SigninWithEmail(email, password)
     } else {
       alert('Fill all field!!')
     }
   }
   return (
     <div className='flex w-fit m-auto my-auto h-screen'>
+      <RedirectWithLogin />
       <div className='sm:shadow-lg sm:border-[1px] sm:m-auto h-fit sm:w-[55vh] p-10'>
         <Top />
         <div className='flex justify-center py-4'>
