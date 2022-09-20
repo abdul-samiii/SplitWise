@@ -12,8 +12,7 @@ import {
 
 const Home = () => {
   const location = useLocation()
-  const data = useSelector(item => item.authReducer.payload)
-  console.log('testingggg ', data)
+  const data = useSelector(item => item.authReducer?.payload?.auth?.currentUser)
 
   return (
     <div className='flex'>
@@ -24,7 +23,7 @@ const Home = () => {
           <img src={IMAGES.banner} className='h-[80%] hidden md:inline  rounded-xl w-[100%]' alt='banner' />
           <img src={IMAGES.mobileBanner} className='h-[80%] md:hidden rounded-xl w-[100%]' alt='banner' />
           <h1 className='font-bold  md:text-3xl -mt-[15%] md:-mt-[7%] relative text-white text-center ml-4 h-fit w-fit'>
-            Welcome! Abdul Sami
+            Welcome! {data?.email}
           </h1>
         </div>
         <div className='ml-20 mt-14'>

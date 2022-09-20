@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-import { ActionCreators } from '../store/actions'
+import { ActionCreators } from '../store'
 
 import { Top } from './AuthComponents'
 import RedirectWithLogin from './RedirectWithLogin'
@@ -15,10 +15,11 @@ const Signup = () => {
 
   const dispatch = useDispatch()
   const { SignupWithEmail } = bindActionCreators(ActionCreators, dispatch)
+
   const handleRegister = () => {
     if (name && email && password) {
       if (password === confirmPassword) {
-        SignupWithEmail(email, password)
+        SignupWithEmail(email, password, name)
       } else {
         alert('Password donot Match!!')
       }

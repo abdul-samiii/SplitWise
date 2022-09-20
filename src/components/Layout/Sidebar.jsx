@@ -5,7 +5,7 @@ import {
 import { useDispatch } from 'react-redux'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-import { ActionCreators } from '../../store/actions'
+import { ActionCreators } from '../../store'
 
 import './sidebar.css'
 
@@ -17,6 +17,7 @@ const Sidebar = () => {
     Logout()
     navigate(0)
   }
+
   return (
     <div className='h-[5%] w-full bottom-0 md:w-[5%] md:h-auto xl:h-screen
       bg-[#00B8B0] fixed md:static'

@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
+
 import { IMAGES } from '../../components/Images'
-// import { Login } from '../../store/actions/AuthAction'
-import { ActionCreators } from '../../store/actions'
+import { ActionCreators } from '../../store'
 
 const Top = () => {
   const dispatch = useDispatch()
@@ -23,7 +23,11 @@ const Top = () => {
   return (
     <>
       <h2 className='text-center font-extrabold text-5xl pt-5 text-[#427573]'>Splitwise</h2>
-      <p className='text-center py-5 text-[#00B8B0]'>Your growth partner</p>
+      <p
+        className='text-center py-5 text-[#00B8B0]'
+      >
+        Your growth partner
+      </p>
       <div
         role='presentation'
         onClick={LoginWithGoogle}

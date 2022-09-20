@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
-import { ActionCreators } from '../store/actions'
+import { ActionCreators } from '../store'
 
 import { Top } from './AuthComponents'
 import RedirectWithLogin from './RedirectWithLogin'
@@ -10,9 +10,10 @@ import RedirectWithLogin from './RedirectWithLogin'
 const Login = () => {
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
-  // console.log('here', token)
   const dispatch = useDispatch()
+
   const { SigninWithEmail } = bindActionCreators(ActionCreators, dispatch)
+
   const handleSignin = () => {
     if (email || password) {
       SigninWithEmail(email, password)
@@ -20,6 +21,7 @@ const Login = () => {
       alert('Fill all field!!')
     }
   }
+
   return (
     <div className='flex w-fit m-auto my-auto h-screen'>
       <RedirectWithLogin />

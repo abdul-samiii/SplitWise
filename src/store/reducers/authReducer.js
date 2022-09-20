@@ -1,21 +1,14 @@
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actionTypes'
+import { InitialState } from './InitialState'
 
-const iState = {
-  user: {},
-}
-
-export const authReducer = (action, state = iState) => {
-  console.log('Hello', action)
+export const authReducer = (action, state = InitialState) => {
   switch (action?.type) {
     case LOGIN_SUCCESS:
       return {
         ...state, user: action.payload,
       }
     case LOGOUT_SUCCESS:
-      alert('jijiji')
-      return {
-        user: action.payload,
-      }
+      return InitialState
     default:
       return state
   }
