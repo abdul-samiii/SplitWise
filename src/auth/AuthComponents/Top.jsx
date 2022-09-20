@@ -19,7 +19,7 @@ const Top = () => {
 
   useEffect(() => {
     navigationHome()
-  })
+  }, uid)
   return (
     <>
       <h2 className='text-center font-extrabold text-5xl pt-5 text-[#427573]'>Splitwise</h2>
