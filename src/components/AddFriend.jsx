@@ -12,9 +12,8 @@ const AddFriend = ({ AddFriendModal }) => {
   const { SearchFriend, AddFriendLogic } = bindActionCreators(ActionCreators, dispatch)
   const [email, setEmail] = useState()
 
-  const handleAddFriend = () => {
-    SearchFriend(email)
-  }
+  const handleAddFriend = () => SearchFriend(email)
+
   return (
     <div className='shadow-xl absolute h-[300px] w-[340px] md:h-[300px] left-0 md:left-auto md:w-[500px] md:ml-20 lg:ml-80 -mt-[5%] z-50 bg-white'>
       <div className='flex'>

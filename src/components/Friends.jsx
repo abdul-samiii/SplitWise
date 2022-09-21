@@ -36,9 +36,7 @@ const Friends = () => {
       img: IMAGES.dp, name: 'Abdullah Shahani', email: 'demo@gmail.com', amount: 700, incomming: false,
     },
   ]
-  const AddFriendModal = () => {
-    setFriendModal(!FriendModal)
-  }
+  const AddFriendModal = () => setFriendModal(!FriendModal)
 
   return (
     <div className='ml-20 mt-14'>

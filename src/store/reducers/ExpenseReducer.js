@@ -6,7 +6,6 @@ import {
 import { InitialState } from './InitialState'
 
 export const expenseReducer = (action, state = InitialState) => {
-  console.log(action?.payload)
   switch (action?.type) {
     case GET_DEBIT_START:
       return {

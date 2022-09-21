@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import { ActionCreators } from '../store'
 import SettlePayment from './SettlePayment'
 
@@ -10,13 +11,12 @@ const HomeActive = () => {
   const tempData = useSelector(item => item?.expenseReducer?.payload)
   const { GetDebit } = bindActionCreators(ActionCreators, dispatch)
   const data = tempData?.filter((item) => !item.data().status)
+
   useEffect(() => {
     GetDebit('ksamk100474@gmail.com')
   }, [3])
 
-  const modal = () => {
-    setSettleModal(!settleModal)
-  }
+  const modal = () => setSettleModal(!settleModal)
 
   return (
     <div className='h-64 w-1/2 overflow-scroll scrollbar-hide'>

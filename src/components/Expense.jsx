@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import AddExpense from './AddExpense'
 import HomeActive from './HomeActive'
 import HomeCompleted from './HomeCompleted'
@@ -7,9 +8,7 @@ const Expense = () => {
   const [active, setActive] = useState(true)
   const [ExpenseModal, setExpenseModal] = useState(false)
 
-  const AddExpenseModal = () => {
-    setExpenseModal(!ExpenseModal)
-  }
+  const AddExpenseModal = () => setExpenseModal(!ExpenseModal)
 
   return (
     <div className='ml-20 mt-14'>

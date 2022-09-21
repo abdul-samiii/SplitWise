@@ -39,7 +39,6 @@ export const createUserDocument = async (user, additionalData) => {
 export const GetUser = (email) => (dispatch) => {
   firebase.firestore().collection('users').doc(email).get()
     .then((snapshot) => {
-      console.log(snapshot.data())
       window.localStorage.setItem('user', JSON.stringify(snapshot.data()))
       dispatch({ type: GET_USER_SUCCESS, payload: snapshot.data() })
     })

@@ -2,6 +2,7 @@ import { XMarkIcon } from '@heroicons/react/24/solid'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import { auth } from '../utils/Firebase'
 import { ActionCreators } from '../store'
 
@@ -15,12 +16,14 @@ const AddExpense = ({ AddExpenseModal }) => {
   const [expenseAmount, setExpenseAmount] = useState()
 
   const userData = useSelector(item => item?.authReducer?.payload)
+
   const getUser = () => {
     setTimeout(() => {
       const user = auth.currentUser
       GetUser(user?.email)
     }, 2000)
   }
+
   useEffect(() => {
     getUser()
   }, userData)
