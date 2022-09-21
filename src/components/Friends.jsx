@@ -39,6 +39,7 @@ const Friends = () => {
   const AddFriendModal = () => {
     setFriendModal(!FriendModal)
   }
+
   return (
     <div className='ml-20 mt-14'>
       { FriendModal && <AddFriend AddFriendModal={AddFriendModal} /> }

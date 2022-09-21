@@ -1,4 +1,7 @@
 import {
+  GET_USER_FAILED,
+  GET_USER_START,
+  GET_USER_SUCCESS,
   INSERT_USER_FAILED,
   INSERT_USER_START,
   INSERT_USER_SUCCESS,
@@ -31,6 +34,18 @@ export const userReducer = (action, state = InitialState) => {
         ...state, isLoading: false, searchUser: action?.payload,
       }
     case SEARCH_FRIEND_FAILED:
+      return {
+        ...state, isLoading: false, searchUser: undefined,
+      }
+    case GET_USER_START:
+      return {
+        ...state, isLoading: true,
+      }
+    case GET_USER_SUCCESS:
+      return {
+        ...state, isLoading: false, user: action?.payload,
+      }
+    case GET_USER_FAILED:
       return {
         ...state, isLoading: false, searchUser: undefined,
       }

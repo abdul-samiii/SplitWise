@@ -15,7 +15,6 @@ const AddFriend = ({ AddFriendModal }) => {
   const handleAddFriend = () => {
     SearchFriend(email)
   }
-
   return (
     <div className='shadow-xl absolute h-[300px] w-[340px] md:h-[300px] left-0 md:left-auto md:w-[500px] md:ml-20 lg:ml-80 -mt-[5%] z-50 bg-white'>
       <div className='flex'>
@@ -52,7 +51,7 @@ const AddFriend = ({ AddFriendModal }) => {
             hover:cursor-pointer text-center md:ml-16 ml-4 h-fit w-fit
             hover:bg-[#a6f0ed] hover:text-white '
             role='presentation'
-            onClick={AddFriendLogic}
+            onClick={() => AddFriendLogic(email)}
           >
             Add Friend
           </h3>
