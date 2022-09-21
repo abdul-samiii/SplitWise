@@ -9,7 +9,8 @@ import { ActionCreators } from '../../store'
 const Top = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { LoginWithGoogle } = bindActionCreators(ActionCreators, dispatch)
+  const { LoginWithGoogle, GetUser } = bindActionCreators(ActionCreators, dispatch)
+
   const uid = useSelector(item => item.authReducer.payload?.uid)
   const navigationHome = () => {
     if (uid) {
@@ -20,11 +21,14 @@ const Top = () => {
   useEffect(() => {
     navigationHome()
   }, uid)
+
   return (
     <>
       <h2 className='text-center font-extrabold text-5xl pt-5 text-[#427573]'>Splitwise</h2>
       <p
         className='text-center py-5 text-[#00B8B0]'
+        onClick={GetUser}
+        role='presentation'
       >
         Your growth partner
       </p>

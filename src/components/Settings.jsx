@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
+
 import { ActionCreators } from '../store'
 
 const Settings = () => {
@@ -9,6 +10,7 @@ const Settings = () => {
   const [confirmPassword, setConfirmPassword] = useState()
   const dispatch = useDispatch()
   const { reAuthenticateCredential } = bindActionCreators(ActionCreators, dispatch)
+
   const handleChangePassword = () => {
     if (newPassword === confirmPassword) {
       reAuthenticateCredential(currendPassword, newPassword)
@@ -16,6 +18,7 @@ const Settings = () => {
       alert('Password donot match!')
     }
   }
+
   return (
     <div className='md:ml-20 ml-14 pb-16 md:pb-0'>
       <h3 className='font-bold text-[#427573] text-xl ml-4 h-fit w-1/2 mt-16 border-b-2 pb-4'>

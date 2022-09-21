@@ -1,5 +1,6 @@
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
+import { progress } from '../../components'
 
 import { firestore } from '../../utils/Firebase'
 import {
@@ -34,14 +35,17 @@ export const createUserDocument = async (user, additionalData) => {
   }
 }
 
-export const GetUser = async () => {
-  const db = firestore
-  const data = await db.collection('users').doc('S2jA2TFKzJcl2mUlEfCx1feFidj1').get()
-  // const result = data.docs.map(doc => ({ ...doc.data(), id: doc.id }))
-  console.log(data)
+export const GetUser = async (email) => {
+  firebase.firestore().collection('users').doc(email).get()
+    .then((snapshot) => {
+      console.log(snapshot.data())
+      window.localStorage.setItem('user', JSON.stringify(snapshot.data()))
+    })
+    .catch((e) => console.log(e))
 }
 
 export const SearchFriend = (email) => {
+  progress.start()
   const db = firebase.firestore()
   const userCollection = db.collection('users')
   let datatemp
@@ -49,7 +53,8 @@ export const SearchFriend = (email) => {
     firebase.auth().fetchProvidersForEmail(email)
       .then(providers => {
         if (providers.length === 0) {
-          console.log('user not found')
+          alert('user not found')
+          progress.finish()
           dispatch({ type: SEARCH_FRIEND_FAILED })
         } else {
           try {
@@ -59,9 +64,11 @@ export const SearchFriend = (email) => {
                 datatemp = doc.data()
                 console.log(datatemp.displayName)
                 dispatch({ type: SEARCH_FRIEND_SUCCESS, payload: datatemp })
+                progress.finish()
               })
           } catch (error) {
             alert(error.message)
+            progress.finish()
           }
         }
       })
@@ -69,13 +76,17 @@ export const SearchFriend = (email) => {
 }
 
 export const AddFriendLogic = () => {
+  progress.start()
   const db = firebase.firestore()
   const userCollection = db.collection('users')
   try {
     userCollection.doc('ksamk100474@gmail.com').update({
       friends: firebase.firestore.FieldValue.arrayUnion('jo@gmail.com'),
     })
+    alert('Added')
+    progress.finish()
   } catch (e) {
     console.log('Error ', e)
+    progress.finish()
   }
 }
