@@ -1,12 +1,26 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { ActionCreators } from '../store'
 
 const Settings = () => {
   const [currendPassword, setCurrentPassword] = useState()
   const [newPassword, setNewPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
+  const dispatch = useDispatch()
+  const { reAuthenticateCredential } = bindActionCreators(ActionCreators, dispatch)
+
+  const handleChangePassword = () => {
+    if (newPassword === confirmPassword) {
+      reAuthenticateCredential(currendPassword, newPassword)
+    } else {
+      alert('Password donot match!')
+    }
+  }
 
   return (
-    <div className='md:ml-20 ml-14 pb-16'>
+    <div className='md:ml-20 ml-14 pb-16 md:pb-0'>
       <h3 className='font-bold text-[#427573] text-xl ml-4 h-fit w-1/2 mt-16 border-b-2 pb-4'>
         Change Password
       </h3>
@@ -32,9 +46,12 @@ const Settings = () => {
           value={confirmPassword}
           onChange={(item) => setConfirmPassword(item.target.value)}
         />
-        <h3 className='font-bold text-[#427573] border-2 md:p-4 p-2
-        hover:cursor-pointer rounded-2xl text-center ml-12 h-fit w-fit mt-20
-        hover:bg-[#a6f0ed] hover:text-white'
+        <h3
+          className='font-bold text-[#427573] border-2 md:p-4 p-2
+          hover:cursor-pointer rounded-2xl text-center ml-12 h-fit w-fit mt-20
+          hover:bg-[#a6f0ed] hover:text-white'
+          onClick={handleChangePassword}
+          role='presentation'
         >
           Change Password
         </h3>

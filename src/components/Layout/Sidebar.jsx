@@ -2,12 +2,22 @@ import {
   WalletIcon, UsersIcon, UserGroupIcon, NewspaperIcon, Cog6ToothIcon,
   WrenchScrewdriverIcon, ArrowLeftOnRectangleIcon,
 } from '@heroicons/react/24/solid'
-import { NavLink } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { NavLink, useNavigate } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../../store'
 
 import './sidebar.css'
 
 const Sidebar = () => {
-  console.log()
+  const dispatch = useDispatch()
+  const { Logout } = bindActionCreators(ActionCreators, dispatch)
+  const navigate = useNavigate()
+  const handleLogout = () => {
+    Logout()
+    navigate(0)
+  }
+
   return (
     <div className='h-[5%] w-full bottom-0 md:w-[5%] md:h-auto xl:h-screen
       bg-[#00B8B0] fixed md:static'
@@ -32,9 +42,9 @@ const Sidebar = () => {
         <NavLink to='/settings' className='m-auto'>
           <Cog6ToothIcon title='Settings' className='h-7 text-white hover:cursor-pointer' />
         </NavLink>
-        <NavLink to='/logout' className='m-auto'>
+        <div onClick={handleLogout} role='presentation' className='m-auto'>
           <ArrowLeftOnRectangleIcon title='Logout' className='h-7 text-white hover:cursor-pointer' />
-        </NavLink>
+        </div>
       </div>
     </div>
   )
