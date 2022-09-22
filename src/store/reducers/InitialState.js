@@ -2,5 +2,6 @@ export const InitialState = {
   user: {},
   searchUser: [],
   isLoading: false,
-  debit: [],
+  incomming: [],
+  outgoing: [],
 }

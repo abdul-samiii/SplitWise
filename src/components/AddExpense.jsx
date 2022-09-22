@@ -9,7 +9,7 @@ import { ActionCreators } from '../store'
 const AddExpense = ({ AddExpenseModal }) => {
   const dispatch = useDispatch()
   // const data = useSelector(item => item?.authReducer?.payload)
-  const { createDebitDocument, GetUser } = bindActionCreators(ActionCreators, dispatch)
+  const { createIncommingDocument, GetUser } = bindActionCreators(ActionCreators, dispatch)
   const [email, setEmail] = useState()
   const [searchFriend, setSearchFriend] = useState(false)
   const [expenseTitle, setExpenseTitle] = useState()
@@ -17,16 +17,17 @@ const AddExpense = ({ AddExpenseModal }) => {
 
   const userData = useSelector(item => item?.authReducer?.payload)
 
-  const getUser = () => {
-    setTimeout(() => {
-      const user = auth.currentUser
-      GetUser(user?.email)
-    }, 2000)
-  }
+  // const getUser = () => {
+  //   setTimeout(() => {
+  //     const user = auth.currentUser
+  //     // GetUser(user?.email)
+  //   }, 2000)
+  // }
 
   useEffect(() => {
-    getUser()
-  }, userData)
+    GetUser('demo@gmail.com')
+    // getUser()
+  }, [])
 
   const handleSearchFriend = (emailItem) => {
     console.log(userData.friends.includes(emailItem))
@@ -40,7 +41,7 @@ const AddExpense = ({ AddExpenseModal }) => {
   const handleAddDebit = () => {
     if (expenseTitle && expenseAmount) {
       const user = auth.currentUser
-      createDebitDocument(user, {
+      createIncommingDocument(user, {
         title: expenseTitle,
         amount: expenseAmount,
         friendEmail: email,

@@ -76,12 +76,15 @@ export const SearchFriend = (email) => {
   }
 }
 
-export const AddFriendLogic = (email) => {
+export const AddFriendLogic = (email, friendEmail) => {
   progress.start()
   const db = firebase.firestore()
   const userCollection = db.collection('users')
   try {
-    userCollection.doc('ksamk100474@gmail.com').update({
+    userCollection.doc(email).update({
+      friends: firebase.firestore.FieldValue.arrayUnion(friendEmail),
+    })
+    userCollection.doc(friendEmail).update({
       friends: firebase.firestore.FieldValue.arrayUnion(email),
     })
     alert('Added')

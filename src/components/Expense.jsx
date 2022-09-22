@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 import AddExpense from './AddExpense'
-import HomeActive from './HomeActive'
-import HomeCompleted from './HomeCompleted'
+import IncommingAmount from './IncommingAmount'
+import OutgoingAmount from './OutgoingAmount'
 
 const Expense = () => {
   const [active, setActive] = useState(true)
@@ -33,18 +33,18 @@ const Expense = () => {
           onClick={() => setActive(true)}
           role='presentation'
         >
-          Active
+          Incomming Expenses
         </h3>
         <h3
           className={active ? 'hover:cursor-pointer' : 'hover:cursor-pointer font-bold'}
           onClick={() => setActive(false)}
           role='presentation'
         >
-          Completed
+          Outgoing Expenses
         </h3>
       </div>
-      {active ? <HomeActive />
-        : <HomeCompleted />}
+      {active ? <IncommingAmount />
+        : <OutgoingAmount />}
     </div>
   )
 }

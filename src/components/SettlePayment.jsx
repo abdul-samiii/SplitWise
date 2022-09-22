@@ -10,16 +10,16 @@ const SettlePayment = ({ handleSettleModal, item }) => {
   const { settleExpense } = bindActionCreators(ActionCreators, dispatch)
 
   const handlePay = () => {
-    alert(item?.friendEmail)
+    alert(item?.data().friendEmail)
     const user = auth?.currentUser
-    settleExpense(user?.email, item?.friendEmail)
+    settleExpense(user?.email, item?.data().friendEmail, item?.id)
   }
 
   return (
     <div className='shadow-xl flex absolute h-[300px] w-[340px] md:h-[300px] left-0 md:left-auto md:w-[500px] md:ml-20 lg:ml-80 -mt-[5%] z-50 bg-white'>
       <div>
-        <h2 className='ml-32 mt-16 w-full font-bold'>Title : {item?.title}</h2>
-        <h2 className='ml-32 w-full mt-4 font-bold'>Your Friend : {item?.friendEmail}</h2>
+        <h2 className='ml-32 mt-16 w-full font-bold'>Title : {item?.data().title}</h2>
+        <h2 className='ml-32 w-full mt-4 font-bold'>Your Friend : {item?.data().friendEmail}</h2>
         <h3
           className='font-bold text-[#427573] border-2 p-2 md:px-6
           hover:cursor-pointer rounded-2xl text-center md:ml-36 ml-4 h-fit w-fit mt-[40px]
@@ -27,7 +27,7 @@ const SettlePayment = ({ handleSettleModal, item }) => {
           role='presentation'
           onClick={handlePay}
         >
-          Pay ${item?.amount}
+          Pay ${item?.data().amount}
         </h3>
       </div>
       <XMarkIcon

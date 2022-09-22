@@ -29,6 +29,7 @@ module.exports = {
       'react/jsx-props-no-spreading': 'off',
       'react/jsx-no-bind': 'off',
       "import/prefer-default-export": "off",
+      "default-param-last" : "off",
       'jsx-a11y/no-static-element-interactions': [
         'error',
         {

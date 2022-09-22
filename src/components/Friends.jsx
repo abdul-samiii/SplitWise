@@ -1,41 +1,28 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { ActionCreators } from '../store'
+import { auth } from '../utils/Firebase'
 import AddFriend from './AddFriend'
-import { IMAGES } from './Images'
 
 const Friends = () => {
   const [FriendModal, setFriendModal] = useState(false)
-  const data = [
-    {
-      img: IMAGES.dp, name: 'Duraiz Azam', email: 'demo@gmail.com', amount: 500, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Abdul Sami', email: 'demo@gmail.com', amount: 6400, incomming: true,
-    },
-    {
-      img: IMAGES.dp, name: 'Ahsan Riaz', email: 'demo@gmail.com', amount: 30, incomming: true,
-    },
-    {
-      img: IMAGES.dp, name: 'Mujtaba Shafiq', email: 'demo@gmail.com', amount: 340, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Bilal Hamid', email: 'demo@gmail.com', amount: 520, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Aqsa Tabbasum', email: 'demo@gmail.com', amount: 970, incomming: true,
-    },
-    {
-      img: IMAGES.dp, name: 'Hamza Ali', email: 'demo@gmail.com', amount: 50, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Amina Tahir', email: 'demo@gmail.com', amount: 300, incomming: true,
-    },
-    {
-      img: IMAGES.dp, name: 'Arwa Sajjad', email: 'demo@gmail.com', amount: 3400, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Abdullah Shahani', email: 'demo@gmail.com', amount: 700, incomming: false,
-    },
-  ]
+  const dispatch = useDispatch()
+  const data = useSelector(item => item?.userReducer.user?.friends)
+  const { GetUser } = bindActionCreators(ActionCreators, dispatch)
+
+  const getUser = () => {
+    setTimeout(() => {
+      const user = auth.currentUser
+      GetUser(user?.email)
+    }, 3000)
+  }
+
+  useEffect(() => {
+    getUser()
+  }, data)
+
   const AddFriendModal = () => setFriendModal(!FriendModal)
 
   return (
@@ -62,16 +49,15 @@ const Friends = () => {
       </h3>
       <div className='h-64 w-1/2 overflow-scroll scrollbar-hide'>
         {
-        data.map((item) => {
+        data?.map((item) => {
           console.log()
           return (
             <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit'>
-              <img src={item.img} className='h-14 rounded-lg' alt='img' />
+              <img src={item} className='h-14 rounded-lg' alt='img' />
               <div className='ml-4 mt-1'>
-                <h3 className='font-bold'>{item.name}</h3>
-                <p className='font-thin text-sm'>{item.email}</p>
+                <h3 className='font-bold'>{item}</h3>
+                <p className='font-thin text-sm'>your friend</p>
               </div>
-              <p className='font-thin text-sm ml-32 mt-3'>{item.incomming ? 'You are owed ' : 'You Owed '}${item.amount}</p>
             </div>
           )
         })

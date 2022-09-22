@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { ActionCreators } from '../store'
+import { auth } from '../utils/Firebase'
 import { IMAGES } from './Images'
 
 const AddFriend = ({ AddFriendModal }) => {
   const dispatch = useDispatch()
-  const data = useSelector(item => item?.authReducer?.payload)
+  const data = useSelector(item => item?.userReducer?.searchUser)
   const { SearchFriend, AddFriendLogic } = bindActionCreators(ActionCreators, dispatch)
   const [email, setEmail] = useState()
 
@@ -50,7 +51,7 @@ const AddFriend = ({ AddFriendModal }) => {
             hover:cursor-pointer text-center md:ml-16 ml-4 h-fit w-fit
             hover:bg-[#a6f0ed] hover:text-white '
             role='presentation'
-            onClick={() => AddFriendLogic(email)}
+            onClick={() => AddFriendLogic(auth.currentUser.email, email)}
           >
             Add Friend
           </h3>

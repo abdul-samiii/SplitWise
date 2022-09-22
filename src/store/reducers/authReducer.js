@@ -1,7 +1,7 @@
 import { LOGIN_SUCCESS, LOGOUT_SUCCESS } from '../actionTypes'
 import { InitialState } from './InitialState'
 
-export const authReducer = (action, state = InitialState) => {
+export const authReducer = (state = InitialState.user, action) => {
   switch (action?.type) {
     case LOGIN_SUCCESS:
       return {

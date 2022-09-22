@@ -42,7 +42,6 @@ export const SigninWithEmail = (email, password) => {
   return (dispatch) => {
     auth.signInWithEmailAndPassword(email, password)
     auth.onAuthStateChanged(user => {
-      console.log('uiuiuiuTT ', user)
       window.localStorage.setItem('uid', user.multiFactor.user.uid)
       dispatch({ payload: user.multiFactor.user, type: 'LOGIN_SUCCESS' })
       window.localStorage.setItem('email', user.multiFactor.user.email)

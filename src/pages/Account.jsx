@@ -17,20 +17,23 @@ import { ActionCreators } from '../store'
 import { auth } from '../utils/Firebase'
 
 const Account = () => {
-  // const userData = JSON.parse(window.localStorage.getItem('user'))
   const dispatch = useDispatch()
-  const userData = useSelector(item => item?.authReducer?.payload)
+  const userData = useSelector(item => item.userReducer.user)
+  console.log(userData)
   const { GetUser } = bindActionCreators(ActionCreators, dispatch)
   console.log('yo ', userData)
+
   const getUser = () => {
     setTimeout(() => {
       const user = auth.currentUser
       GetUser(user?.email)
     }, 3000)
   }
+
   useEffect(() => {
     getUser()
   }, userData)
+
   return (
     <div className='flex'>
       <RedirectWithoutLogin />

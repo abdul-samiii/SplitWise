@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import CreateGroup from './CreateGroup'
 import { IMAGES } from './Images'
 
@@ -36,6 +37,7 @@ const Groups = () => {
       img: IMAGES.dp, name: 'Trip Group', members: 23, amount: 700, incomming: false,
     },
   ]
+
   const GroupModalToggle = () => {
     setGroupModal(!GroupModal)
   }
