@@ -14,6 +14,7 @@ const Home = () => {
   const location = useLocation()
   // const data = useSelector(item => item.authReducer?.payload?.auth?.currentUser)
   const bannerEmail = window.localStorage.getItem('email')
+
   return (
     <div className='flex'>
       <RedirectWithoutLogin />

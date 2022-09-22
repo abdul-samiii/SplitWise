@@ -7,12 +7,32 @@ import {
   GiftIcon,
   LanguageIcon,
 } from '@heroicons/react/24/solid'
-import { RedirectWithoutLogin } from '../auth'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
+import { RedirectWithoutLogin } from '../auth'
 import { IMAGES, Sidebar } from '../components'
+import { ActionCreators } from '../store'
+import { auth } from '../utils/Firebase'
 
 const Account = () => {
-  const userData = JSON.parse(window.localStorage.getItem('user'))
+  const dispatch = useDispatch()
+  const userData = useSelector(item => item.userReducer.user)
+  console.log(userData)
+  const { GetUser } = bindActionCreators(ActionCreators, dispatch)
+  console.log('yo ', userData)
+
+  const getUser = () => {
+    setTimeout(() => {
+      const user = auth.currentUser
+      GetUser(user?.email)
+    }, 3000)
+  }
+
+  useEffect(() => {
+    getUser()
+  }, userData)
 
   return (
     <div className='flex'>

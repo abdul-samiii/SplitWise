@@ -4,6 +4,7 @@ import { progress } from '../../components'
 
 import { firestore } from '../../utils/Firebase'
 import {
+  GET_USER_SUCCESS,
   SEARCH_FRIEND_FAILED,
   SEARCH_FRIEND_SUCCESS,
 } from '../actionTypes'
@@ -35,11 +36,11 @@ export const createUserDocument = async (user, additionalData) => {
   }
 }
 
-export const GetUser = async (email) => {
+export const GetUser = (email) => (dispatch) => {
   firebase.firestore().collection('users').doc(email).get()
     .then((snapshot) => {
-      console.log(snapshot.data())
       window.localStorage.setItem('user', JSON.stringify(snapshot.data()))
+      dispatch({ type: GET_USER_SUCCESS, payload: snapshot.data() })
     })
     .catch((e) => console.log(e))
 }
@@ -75,13 +76,16 @@ export const SearchFriend = (email) => {
   }
 }
 
-export const AddFriendLogic = () => {
+export const AddFriendLogic = (email, friendEmail) => {
   progress.start()
   const db = firebase.firestore()
   const userCollection = db.collection('users')
   try {
-    userCollection.doc('ksamk100474@gmail.com').update({
-      friends: firebase.firestore.FieldValue.arrayUnion('jo@gmail.com'),
+    userCollection.doc(email).update({
+      friends: firebase.firestore.FieldValue.arrayUnion(friendEmail),
+    })
+    userCollection.doc(friendEmail).update({
+      friends: firebase.firestore.FieldValue.arrayUnion(email),
     })
     alert('Added')
     progress.finish()
