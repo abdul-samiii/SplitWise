@@ -16,24 +16,23 @@ const IncommingAmount = () => {
       GetIncommingAmount(user?.email)
     }, 1000)
   }
-
   useEffect(() => {
     getDebit()
   }, [])
-
   return (
     <div className='h-64 w-1/2 overflow-scroll scrollbar-hide'>
       {
         data
           ? data?.map((item) => {
-            console.log(item?.data())
+            const groupLength = item?.data()?.friendEmails?.length
+            console.log('frnds', item.data().friendEmails)
             return (
               <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit '>
                 <img src={item.data().img} className='h-14 rounded-lg' alt='img' />
                 <div className='ml-4 mt-1'>
                   <h3 className='font-bold'>{item.data().title}</h3>
-                  <p className='font-thin text-sm'>{item.data().friendEmail}</p>
-                  <p className='font-thin text-sm'>{item.data().status ? 'You were owed ' : 'You are Owed '}${item.data().amount}</p>
+                  <p className='font-thin text-sm'>{item.data().friendEmails}</p>
+                  <p className='font-thin text-sm'>{item.data().status ? 'You were owed ' : 'You are Owed '}${(item.data().amount) * groupLength}</p>
                 </div>
                 { item?.data().status && <p className='ml-10 font-thin'>Recieved</p> }
               </div>

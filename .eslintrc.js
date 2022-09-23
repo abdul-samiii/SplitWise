@@ -28,8 +28,10 @@ module.exports = {
       'react/prefer-stateless-function': 'off',
       'react/jsx-props-no-spreading': 'off',
       'react/jsx-no-bind': 'off',
+      'import/no-cycle': [2, { maxDepth: 1 }],
       "import/prefer-default-export": "off",
       "default-param-last" : "off",
+      "no-var": 0,
       'jsx-a11y/no-static-element-interactions': [
         'error',
         {

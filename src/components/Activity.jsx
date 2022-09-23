@@ -44,19 +44,16 @@ const Activity = () => {
       </div>
       <div className='h-64 w-1/2 overflow-scroll scrollbar-hide'>
         {
-        data.map((item) => {
-          console.log()
-          return (
-            <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit '>
-              <BellAlertIcon className='h-10 mt-1 rounded-lg' />
-              <div className='ml-4 mt-1'>
-                <h3 className='font-bold'>{item.title}</h3>
-                <p className='font-thin text-sm'>{item.time}</p>
-              </div>
+        data.map((item) => (
+          <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit '>
+            <BellAlertIcon className='h-10 mt-1 rounded-lg' />
+            <div className='ml-4 mt-1'>
+              <h3 className='font-bold'>{item.title}</h3>
+              <p className='font-thin text-sm'>{item.time}</p>
             </div>
-          )
-        })
-        }
+          </div>
+        ))
+      }
       </div>
     </div>
   )

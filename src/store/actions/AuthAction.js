@@ -16,7 +16,7 @@ export const LoginWithGoogle = () => (dispatch) => {
     window.localStorage.setItem('uid', user.multiFactor.user.uid)
     dispatch({ payload: user.multiFactor.user, type: 'LOGIN_SUCCESS' })
     window.localStorage.setItem('email', user.multiFactor.user.email)
-    GetUser(user.multiFactor.user.email)
+    GetUser()
   })
 }
 
@@ -45,7 +45,7 @@ export const SigninWithEmail = (email, password) => {
       window.localStorage.setItem('uid', user.multiFactor.user.uid)
       dispatch({ payload: user.multiFactor.user, type: 'LOGIN_SUCCESS' })
       window.localStorage.setItem('email', user.multiFactor.user.email)
-      GetUser(user.multiFactor.user.email)
+      GetUser()
       progress.finish()
     })
   }

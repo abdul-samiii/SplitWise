@@ -1,46 +1,39 @@
-import { useState } from 'react'
+import { UserGroupIcon } from '@heroicons/react/24/solid'
+import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { ActionCreators } from '../store'
+import AddGroupExpense from './AddGroupExpense'
 
 import CreateGroup from './CreateGroup'
-import { IMAGES } from './Images'
 
 const Groups = () => {
   const [GroupModal, setGroupModal] = useState(false)
-  const data = [
-    {
-      img: IMAGES.dp, name: 'Food Group', members: 4, amount: 500, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Office Group', members: 3, amount: 6400, incomming: true,
-    },
-    {
-      img: IMAGES.dp, name: 'Best Friends', members: 66, amount: 30, incomming: true,
-    },
-    {
-      img: IMAGES.dp, name: 'Colleagues', members: 12, amount: 340, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Old Friends', members: 3, amount: 520, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Girls Group', members: 8, amount: 970, incomming: true,
-    },
-    {
-      img: IMAGES.dp, name: 'Boys Group', members: 5, amount: 50, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Clinets Group', members: 42, amount: 300, incomming: true,
-    },
-    {
-      img: IMAGES.dp, name: 'Engineers', members: 12, amount: 3400, incomming: false,
-    },
-    {
-      img: IMAGES.dp, name: 'Trip Group', members: 23, amount: 700, incomming: false,
-    },
-  ]
+  const [settleModal, setSettleModal] = useState()
+  const dispatch = useDispatch()
+  const data = useSelector(item => item?.userReducer)
+  const groups = data?.user?.groups
+  const members = useSelector(item => item?.userReducer?.groupCount)
+
+  const { GetGroup, GetUser } = bindActionCreators(ActionCreators, dispatch)
+
+  const getUser = () => {
+    setTimeout(() => {
+      GetUser()
+    }, 3000)
+  }
+
+  useEffect(() => {
+    getUser()
+    GetGroup()
+  }, [])
 
   const GroupModalToggle = () => {
     setGroupModal(!GroupModal)
   }
+
+  const OpenModal = (index) => setSettleModal(index)
+  const CloseModal = () => setSettleModal(null)
 
   return (
     <div className='ml-20 mt-14'>
@@ -66,20 +59,22 @@ const Groups = () => {
       </h3>
       <div className='h-64 w-1/2 overflow-scroll scrollbar-hide'>
         {
-        data.map((item) => {
-          console.log()
-          return (
-            <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit'>
-              <img src={item.img} className='h-14 rounded-lg' alt='img' />
+        groups?.map((item, index) => (
+          <>
+            { settleModal === index
+              && <AddGroupExpense handleSettleModal={CloseModal} item={item} /> }
+            <div key={Math.random()} role='presentation' onClick={() => OpenModal(index)} className='m-4 flex hover:cursor-pointer w-fit'>
+              <UserGroupIcon className='h-10 mt-1 rounded-lg' />
               <div className='ml-4 mt-1'>
-                <h3 className='font-bold'>{item.name}</h3>
-                <p className='font-thin text-sm'>{item.members} members</p>
+                <h3 className='font-bold'>{item}</h3>
+                <p className='font-thin text-sm'>{members[index]} members</p>
               </div>
-              <p className='font-thin text-sm ml-32 mt-3'>{item.incomming ? 'You are owed ' : 'You Owed '}${item.amount}</p>
+              {/* <p className='font-thin text-sm ml-32 mt-3'>
+              {item.incomming ? 'You are owed ' : 'You Owed '}${item.amount}</p> */}
             </div>
-          )
-        })
-        }
+          </>
+        ))
+      }
       </div>
     </div>
   )

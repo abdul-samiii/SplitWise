@@ -2,8 +2,9 @@ import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import { progress } from '../../components'
 
-import { firestore } from '../../utils/Firebase'
+import { auth, firestore } from '../../utils/Firebase'
 import {
+  GET_GROUPS_SUCCESS,
   GET_USER_SUCCESS,
   SEARCH_FRIEND_FAILED,
   SEARCH_FRIEND_SUCCESS,
@@ -36,8 +37,9 @@ export const createUserDocument = async (user, additionalData) => {
   }
 }
 
-export const GetUser = (email) => (dispatch) => {
-  firebase.firestore().collection('users').doc(email).get()
+export const GetUser = () => (dispatch) => {
+  const user = auth?.currentUser
+  firebase.firestore().collection('users').doc(user?.email).get()
     .then((snapshot) => {
       window.localStorage.setItem('user', JSON.stringify(snapshot.data()))
       dispatch({ type: GET_USER_SUCCESS, payload: snapshot.data() })
@@ -63,7 +65,6 @@ export const SearchFriend = (email) => {
               .get()
               .then(doc => {
                 datatemp = doc.data()
-                console.log(datatemp.displayName)
                 dispatch({ type: SEARCH_FRIEND_SUCCESS, payload: datatemp })
                 progress.finish()
               })
@@ -93,4 +94,64 @@ export const AddFriendLogic = (email, friendEmail) => {
     console.log('Error ', e)
     progress.finish()
   }
+}
+
+export const CreateGroupLogic = (groupName, friendEmails) => {
+  progress.start()
+  const { email } = auth.currentUser
+  const db = firebase.firestore()
+  const userCollection = db.collection('users')
+  try {
+    userCollection.doc(email).update({
+      groups: firebase.firestore.FieldValue.arrayUnion(groupName),
+    })
+
+    friendEmails.map((item) => {
+      userCollection.doc(item).update({
+        groups: firebase.firestore.FieldValue.arrayUnion(groupName),
+      })
+      return friendEmails
+    })
+
+    alert('Created')
+    progress.finish()
+  } catch (e) {
+    console.log('Error ', e)
+    progress.finish()
+  }
+
+  const userRef = firestore.doc(`groups/${groupName}`)
+  const snapshot = userRef.get()
+  if (!snapshot.exists) {
+    try {
+      userRef.set({
+        members: friendEmails,
+        createdAt: new Date(),
+      })
+    } catch (error) {
+      console.log('Error in creating Group', error)
+    }
+  }
+}
+
+export const GetGroup = () => (dispatch) => {
+  var gCount = []
+  const groupNames = ['jobs', 'Dinner', 'Office']
+  groupNames.map((item) => {
+    firebase.firestore().collection('groups').doc(item).get()
+      .then((snapshot) => {
+        gCount.push(snapshot.data().members.length)
+      })
+      .catch((e) => console.log(e))
+    return item
+  })
+  dispatch({ type: GET_GROUPS_SUCCESS, payload: gCount })
+}
+
+export const GetGroupMembers = () => (dispatch) => {
+  firebase.firestore().collection('groups').doc('jobs').get()
+    .then((snapshot) => {
+      dispatch({ type: 'GET_MEMBERS_SUCCESS', payload: snapshot.data().members })
+    })
+    .catch((e) => console.log(e))
 }

@@ -3,5 +3,8 @@ export const InitialState = {
   searchUser: [],
   isLoading: false,
   incomming: [],
+  incommingGroup: {},
   outgoing: [],
+  groupCount: [],
+  groupMembers: [],
 }

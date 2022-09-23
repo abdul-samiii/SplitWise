@@ -14,19 +14,15 @@ import { bindActionCreators } from 'redux'
 import { RedirectWithoutLogin } from '../auth'
 import { IMAGES, Sidebar } from '../components'
 import { ActionCreators } from '../store'
-import { auth } from '../utils/Firebase'
 
 const Account = () => {
   const dispatch = useDispatch()
   const userData = useSelector(item => item.userReducer.user)
-  console.log(userData)
   const { GetUser } = bindActionCreators(ActionCreators, dispatch)
-  console.log('yo ', userData)
 
   const getUser = () => {
     setTimeout(() => {
-      const user = auth.currentUser
-      GetUser(user?.email)
+      GetUser()
     }, 3000)
   }
 

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { ActionCreators } from '../store'
-import { auth } from '../utils/Firebase'
 import AddFriend from './AddFriend'
 
 const Friends = () => {
@@ -14,8 +13,7 @@ const Friends = () => {
 
   const getUser = () => {
     setTimeout(() => {
-      const user = auth.currentUser
-      GetUser(user?.email)
+      GetUser()
     }, 3000)
   }
 
@@ -49,19 +47,16 @@ const Friends = () => {
       </h3>
       <div className='h-64 w-1/2 overflow-scroll scrollbar-hide'>
         {
-        data?.map((item) => {
-          console.log()
-          return (
-            <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit'>
-              <img src={item} className='h-14 rounded-lg' alt='img' />
-              <div className='ml-4 mt-1'>
-                <h3 className='font-bold'>{item}</h3>
-                <p className='font-thin text-sm'>your friend</p>
-              </div>
+        data?.map((item) => (
+          <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit'>
+            <img src={item} className='h-14 rounded-lg' alt='img' />
+            <div className='ml-4 mt-1'>
+              <h3 className='font-bold'>{item}</h3>
+              <p className='font-thin text-sm'>your friend</p>
             </div>
-          )
-        })
-        }
+          </div>
+        ))
+      }
       </div>
     </div>
   )

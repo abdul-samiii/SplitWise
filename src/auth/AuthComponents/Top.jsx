@@ -11,7 +11,8 @@ const Top = () => {
   const navigate = useNavigate()
   const { LoginWithGoogle } = bindActionCreators(ActionCreators, dispatch)
 
-  const uid = useSelector(item => item.authReducer.payload?.uid)
+  const uid = useSelector(item => item.authReducer.user?.uid)
+
   const navigationHome = () => {
     if (uid) {
       navigate('/')
