@@ -12,10 +12,14 @@ const Settings = () => {
   const { reAuthenticateCredential } = bindActionCreators(ActionCreators, dispatch)
 
   const handleChangePassword = () => {
-    if (newPassword === confirmPassword) {
-      reAuthenticateCredential(currendPassword, newPassword)
+    if (newPassword.length >= 6) {
+      if (newPassword === confirmPassword) {
+        reAuthenticateCredential(currendPassword, newPassword)
+      } else {
+        alert('Password donot match!')
+      }
     } else {
-      alert('Password donot match!')
+      alert('Password should have minimum 6 length')
     }
   }
 

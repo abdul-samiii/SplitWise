@@ -89,4 +89,10 @@ export const reAuthenticateCredential = (currentPassword, newPassword) => {
   reauthenticateWithCredential(user, cred).then(() => {
     changePassword(newPassword)
   })
+    .catch((error) => {
+      // An error happened.
+      alert(error.message)
+      this.toasterService.notificationDanger(error.message)
+      progress.finish()
+    })
 }

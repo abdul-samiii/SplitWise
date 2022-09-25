@@ -7,18 +7,19 @@ import {
   GiftIcon,
   LanguageIcon,
 } from '@heroicons/react/24/solid'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 import { RedirectWithoutLogin } from '../auth'
-import { IMAGES, Sidebar } from '../components'
+import { EditAccount, IMAGES, Sidebar } from '../components'
 import { ActionCreators } from '../store'
 
 const Account = () => {
   const dispatch = useDispatch()
   const userData = useSelector(item => item.userReducer.user)
   const { GetUser } = bindActionCreators(ActionCreators, dispatch)
+  const [edit, setEdit] = useState(false)
 
   const getUser = () => {
     setTimeout(() => {
@@ -28,7 +29,7 @@ const Account = () => {
 
   useEffect(() => {
     getUser()
-  }, userData)
+  }, edit)
 
   return (
     <div className='flex'>
@@ -51,9 +52,12 @@ const Account = () => {
               <MapPinIcon className='h-5 mt-1' />
               <p className=' text-[#427573] text-lg'>{userData?.city}</p>
             </div>
-            <h3 className='font-bold text-[#427573] border-2 py-3 px-12
+            <h3
+              className='font-bold text-[#427573] border-2 py-3 px-12
               hover:cursor-pointer rounded-2xl text-center ml-4 h-fit w-fit mt-20
             hover:bg-[#a6f0ed] hover:text-white hidden lg:inline-block'
+              role='presentation'
+              onClick={() => setEdit(true)}
             >
               Edit
             </h3>
@@ -79,14 +83,18 @@ const Account = () => {
               <p className=' text-[#427573] text-lg font-bold'>Language</p>
               <p className='text-[#427573] mt-[2px]'>{userData?.language}</p>
             </div>
-            <h3 className='font-bold text-[#427573] border-2 py-3 px-12
+            <h3
+              className='font-bold text-[#427573] border-2 py-3 px-12
               hover:cursor-pointer rounded-2xl text-center ml-4 h-fit w-fit mt-20
             hover:bg-[#a6f0ed] hover:text-white lg:hidden'
+              role='presentation'
+              onClick={() => setEdit(true)}
             >
               Edit
             </h3>
           </div>
         </div>
+        { edit && <EditAccount setEdit={setEdit} /> }
       </div>
     </div>
   )
