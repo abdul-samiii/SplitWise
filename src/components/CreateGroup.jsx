@@ -22,9 +22,7 @@ const CreateGroup = ({ GroupModalToggle }) => {
     getUser()
   }, data)
 
-  const handleCreateGroup = () => {
-    CreateGroupLogic(groupName.current.value, groupEmails.current)
-  }
+  const handleCreateGroup = () => CreateGroupLogic(groupName.current.value, groupEmails.current)
 
   const handleCheckBox = (checkboxEmail) => {
     if (groupEmails.current.indexOf(checkboxEmail) >= 0) {

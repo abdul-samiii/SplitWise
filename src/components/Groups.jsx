@@ -23,11 +23,8 @@ const Groups = () => {
     }, 3000)
   }
 
-  const getGroup = async () => {
-    if (groups) {
-      GetGroup(groups)
-    }
-  }
+  const getGroup = () => groups && GetGroup(groups)
+
   useEffect(() => {
     getUser()
     getGroup()

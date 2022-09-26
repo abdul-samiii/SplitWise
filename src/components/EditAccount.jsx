@@ -20,10 +20,8 @@ const EditAccount = ({ setEdit }) => {
   const data = useSelector(item => item?.userReducer?.user)
   const { GetUser, UpdateProfile } = bindActionCreators(ActionCreators, dispatch)
 
-  const getUser = () => {
-    setTimeout(() => {
-      GetUser()
-    }, 3000)
+  const getUser = async () => {
+    await GetUser()
     setUserData({
       ...userData,
       name: data.displayName,
@@ -42,20 +40,20 @@ const EditAccount = ({ setEdit }) => {
   }, data)
 
   const handleUpdateProfile = () => {
-    if (userData.name) {
+    if (userData.name && userData.cnic.length === 13 && userData.phone.length === 11) {
       const obj = {
         displayName: userData.name ?? data?.displayName,
         city: userData.city ?? data?.city,
         dob: userData.dob ?? data?.dob,
         phone: userData.phone ?? data?.phone,
-        cnic: userData.cnic ?? data?.cnin,
+        cnic: userData.cnic ?? data?.cnic,
         currency: userData.currency ?? data?.currency,
         language: userData.language ?? data?.language,
       }
       setEdit(false)
       UpdateProfile(obj)
     } else {
-      alert('Enter your name')
+      alert('Enter valid data')
     }
   }
 
@@ -117,8 +115,8 @@ const EditAccount = ({ setEdit }) => {
         <input
           placeholder='Language'
           className='outline-none border-b-2 lg:ml-44 ml-32 md:w-full text-sm pl-2 pb-2'
-          value={userData.currency}
-          onChange={(item) => setUserData({ ...userData, currency: item.target.value })}
+          value={userData.language}
+          onChange={(item) => setUserData({ ...userData, language: item.target.value })}
         />
       </div>
     </div>

@@ -17,19 +17,13 @@ import { ActionCreators } from '../store'
 
 const Account = () => {
   const dispatch = useDispatch()
-  const userData = useSelector(item => item.userReducer.user)
+  const userData = useSelector(item => item?.userReducer?.user)
   const { GetUser } = bindActionCreators(ActionCreators, dispatch)
   const [edit, setEdit] = useState(false)
 
-  const getUser = () => {
-    setTimeout(() => {
-      GetUser()
-    }, 3000)
-  }
-
   useEffect(() => {
-    getUser()
-  }, edit)
+    GetUser()
+  }, userData)
 
   return (
     <div className='flex'>

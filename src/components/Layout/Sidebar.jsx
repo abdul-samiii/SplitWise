@@ -19,7 +19,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className='h-[5%] w-full bottom-0 md:w-[5%] md:h-auto xl:h-screen
+    <div className='h-[5%] w-full bottom-0 md:w-[5%] md:h-screen xl:h-screen
       bg-[#00B8B0] fixed md:static'
     >
       <h1 className='text-white font-extrabold pt-8 hidden xl:inline-block px-3'>SplitWise</h1>

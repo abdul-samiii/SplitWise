@@ -49,7 +49,7 @@ const Friends = () => {
       <div className='h-64 w-1/2 overflow-scroll scrollbar-hide'>
         {
         data?.map((item) => (
-          <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit'>
+          <div key={item} className='m-4 flex hover:cursor-pointer w-fit'>
             <UserCircleIcon className='h-10 mt-1 rounded-lg' />
             <div className='ml-4 mt-1'>
               <h3 className='font-bold'>{item}</h3>

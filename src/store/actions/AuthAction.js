@@ -26,14 +26,8 @@ export const SignupWithEmail = async (email, password, displayName) => {
   createUserDocument(user, {
     displayName, phone: 'N/A', city: 'N/A', cnic: 'N/A', dob: 'N/A', currency: 'N/A', language: 'N/A',
   })
-
-  return (dispatch) => {
-    auth.onAuthStateChanged(item => {
-      window.localStorage.setItem('uid', item.multiFactor.user.uid)
-      dispatch({ payload: item.multiFactor.user, type: 'LOGIN_SUCCESS' })
-      progress.finish()
-    })
-  }
+  alert('Signup Success! Login Now')
+  progress.finish()
 }
 
 export const SigninWithEmail = (email, password) => {

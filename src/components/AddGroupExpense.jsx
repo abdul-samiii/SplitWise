@@ -48,13 +48,9 @@ const AddGroupExpense = ({ handleSettleModal }) => {
     }
   }
 
-  function handleChange(event) {
-    setFile(event.target.files[0])
-  }
+  const handleChange = (event) => setFile(event.target.files[0])
 
-  const upload = () => {
-    ImgUploader(file, setImage, setPercent)
-  }
+  const upload = () => ImgUploader(file, setImage, setPercent)
 
   return (
     <div className='shadow-xl absolute h-[300px] w-[340px] md:h-[300px] left-0

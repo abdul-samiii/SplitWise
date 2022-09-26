@@ -42,6 +42,7 @@ export const GetUser = () => async (dispatch) => {
   await firebase.firestore().collection('users').doc(user?.email).get()
     .then((snapshot) => {
       window.localStorage.setItem('user', JSON.stringify(snapshot.data()))
+      console.log(snapshot.data())
       dispatch({ type: GET_USER_SUCCESS, payload: snapshot.data() })
     })
     .catch((e) => console.log(e))
@@ -177,7 +178,7 @@ export const UpdateProfile = (additionalData) => {
     })
     progress.finish()
   } catch (e) {
-    console.log('Error ', e)
+    alert('Error ', e)
     progress.finish()
   }
 }

@@ -2,14 +2,14 @@ import firebase from 'firebase/compat/app'
 import { progress } from '../../components'
 
 import { firestore } from '../../utils/Firebase'
-import { GET_GROUP_INC_SUCCESS } from '../actionTypes'
+import { GET_CREDIT_SUCCESS, GET_DEBIT_SUCCESS, GET_GROUP_INC_SUCCESS } from '../actionTypes'
 
 export const createIncommingDocument = async (user, additionalData) => {
   const randomFile = new Date()
   if (!user) return
   const { email } = user
   const {
-    amount, title, friendEmails, image,
+    amount, title, friendEmails,
   } = additionalData
 
   // Incomming
@@ -20,7 +20,6 @@ export const createIncommingDocument = async (user, additionalData) => {
       incommingRef.set({
         amount,
         title,
-        image,
         status: false,
         group: false,
         createdAt: new Date(),
@@ -28,7 +27,6 @@ export const createIncommingDocument = async (user, additionalData) => {
       incommingRef.update({
         friendEmails: firebase.firestore.FieldValue.arrayUnion(friendEmails),
       })
-      alert('Added')
     } catch (error) {
       console.log('Error in creating debit', error)
     }
@@ -41,7 +39,6 @@ export const createIncommingDocument = async (user, additionalData) => {
       outgoingRef.set({
         amount,
         title,
-        image,
         friendEmail: email,
         status: false,
         createdAt: new Date(),
@@ -57,7 +54,7 @@ export const createIncommingDocGroup = async (user, additionalData) => {
   if (!user) return
   const { email } = user
   const {
-    amount, title, friendEmails, image,
+    amount, title, friendEmails,
   } = additionalData
 
   // Incomming
@@ -68,13 +65,11 @@ export const createIncommingDocGroup = async (user, additionalData) => {
       incommingRef.set({
         amount,
         title,
-        image,
         status: false,
         group: true,
         friendEmails,
         createdAt: new Date(),
       })
-      alert('Expense Added')
     } catch (error) {
       console.log('Error in creating debit', error)
     }
@@ -89,7 +84,6 @@ export const createIncommingDocGroup = async (user, additionalData) => {
         outgoingRef.set({
           amount,
           title,
-          image,
           friendEmails: email,
           status: false,
           createdAt: new Date(),
@@ -100,6 +94,32 @@ export const createIncommingDocGroup = async (user, additionalData) => {
     }
     return emailItem
   })
+}
+
+export const GetIncommingAmount = (email) => (dispatch) => {
+  try {
+    firebase.firestore().collection('expense').doc(email).collection('incomming')
+      .get()
+      .then((snapshot) => {
+        dispatch({ type: GET_DEBIT_SUCCESS, payload: snapshot.docs })
+      })
+      .catch((e) => console.log(e))
+  } catch (e) {
+    console.log('error ')
+  }
+}
+
+export const GetOutgoingAmount = (email) => (dispatch) => {
+  try {
+    firebase.firestore().collection('expense').doc(email).collection('outgoing')
+      .get()
+      .then((snapshot) => {
+        dispatch({ type: GET_CREDIT_SUCCESS, payload: snapshot.docs })
+      })
+      .catch((e) => console.log(e))
+  } catch (e) {
+    console.log('error ')
+  }
 }
 
 export const settleExpense = (myEmail, friendEmails, docId) => {

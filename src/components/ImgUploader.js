@@ -1,4 +1,5 @@
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+
 import { storage } from '../utils/Firebase'
 
 export const ImgUploader = (file, setImage, setPercent) => {
@@ -18,7 +19,7 @@ export const ImgUploader = (file, setImage, setPercent) => {
       )
       setPercent(prcnt)
     },
-    (err) => console.log(err),
+    (err) => alert(err),
     () => {
       // download url
       getDownloadURL(uploadTask.snapshot.ref).then((url) => {

@@ -52,13 +52,9 @@ const AddExpense = ({ AddExpenseModal }) => {
     }
   }
 
-  function handleChange(event) {
-    setFile(event.target.files[0])
-  }
+  const handleChange = (event) => setFile(event.target.files[0])
 
-  const upload = () => {
-    ImgUploader(file, setImage, setPercent)
-  }
+  const upload = () => ImgUploader(file, setImage, setPercent)
 
   return (
     <div className='shadow-xl absolute h-[300px] w-[340px] md:h-[300px] left-0 md:left-auto md:w-[500px] md:ml-20 lg:ml-80 -mt-[5%] z-50 bg-white'>
