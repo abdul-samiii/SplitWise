@@ -35,7 +35,7 @@ const OutgoingAmount = () => {
             { settleModal === index
             && <SettlePayment handleSettleModal={CloseModal} item={item} /> }
             <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit '>
-              <img src={item.data().img} className='h-14 rounded-lg' alt='img' />
+              <img src={item.data().image} className='h-14 w-14 rounded-lg' alt='img' />
               <div className='ml-4 mt-1'>
                 <h3 className='font-bold'>{item.data().title}</h3>
                 <p className='font-thin text-sm'>{item.data().friendEmails}</p>

@@ -23,10 +23,12 @@ const Groups = () => {
     }, 3000)
   }
 
+  const getGroup = () => groups && GetGroup(groups)
+
   useEffect(() => {
     getUser()
-    GetGroup()
-  }, [])
+    getGroup()
+  }, groups)
 
   const GroupModalToggle = () => {
     setGroupModal(!GroupModal)

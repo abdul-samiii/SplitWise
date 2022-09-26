@@ -51,6 +51,7 @@ export const userReducer = (state = InitialState, action) => {
         ...state, isLoading: true,
       }
     case GET_USER_SUCCESS:
+      console.log(action)
       return { ...state, isLoading: false, user: action?.payload }
 
     case GET_USER_FAILED:

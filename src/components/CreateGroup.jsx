@@ -1,5 +1,5 @@
 import { XMarkIcon } from '@heroicons/react/24/solid'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
@@ -9,8 +9,8 @@ const CreateGroup = ({ GroupModalToggle }) => {
   const dispatch = useDispatch()
   const data = useSelector(item => item?.userReducer.user?.friends)
   const { GetUser, CreateGroupLogic } = bindActionCreators(ActionCreators, dispatch)
-  const [groupEmails, setGroupEmails] = useState([])
-  const [groupName, setGroupName] = useState()
+  const groupEmails = useRef([])
+  const groupName = useRef('')
 
   const getUser = () => {
     setTimeout(() => {
@@ -22,16 +22,18 @@ const CreateGroup = ({ GroupModalToggle }) => {
     getUser()
   }, data)
 
-  const handleCreateGroup = () => {
-    CreateGroupLogic(groupName, groupEmails)
-  }
+  const handleCreateGroup = () => CreateGroupLogic(groupName.current.value, groupEmails.current)
 
   const handleCheckBox = (checkboxEmail) => {
-    if (groupEmails.indexOf(checkboxEmail) >= 0) {
-      // const index = groupEmails.indexOf(checkboxEmail)
-      setGroupEmails(groupEmails.filter(temp => temp !== checkboxEmail))
+    if (groupEmails.current.indexOf(checkboxEmail) >= 0) {
+      const removeIndex = groupEmails.current.indexOf(checkboxEmail)
+      if (groupEmails.current.length > 1) {
+        groupEmails.current.splice(removeIndex, removeIndex)
+      } else {
+        groupEmails.current.pop()
+      }
     } else {
-      setGroupEmails([...groupEmails, checkboxEmail])
+      groupEmails.current.push(checkboxEmail)
     }
   }
 
@@ -41,8 +43,9 @@ const CreateGroup = ({ GroupModalToggle }) => {
         <input
           placeholder='Group Name'
           className='outline-none border-b-2 w-[200px] md:w-[300px] h-fit ml-5 px-2 mt-[50px] pb-2'
-          value={groupName}
-          onChange={(item) => setGroupName(item.target.value)}
+          // value={groupName.current}
+          // onChange={(item) => groupName.push(item.target.value)}
+          ref={groupName}
         />
         <h3
           className='font-bold text-[#427573] border-2 p-2 md:px-6
@@ -72,7 +75,7 @@ const CreateGroup = ({ GroupModalToggle }) => {
               type='checkbox'
               className='bg-red-500 -mt-6 ml-10'
               value={item}
-              onChange={(item1) => handleCheckBox(item1.target.value)}
+              onChange={(checkboxEmail) => handleCheckBox(checkboxEmail.target.value)}
             />
           </div>
         ))

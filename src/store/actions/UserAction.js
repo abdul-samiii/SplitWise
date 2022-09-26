@@ -37,11 +37,12 @@ export const createUserDocument = async (user, additionalData) => {
   }
 }
 
-export const GetUser = () => (dispatch) => {
+export const GetUser = () => async (dispatch) => {
   const user = auth?.currentUser
-  firebase.firestore().collection('users').doc(user?.email).get()
+  await firebase.firestore().collection('users').doc(user?.email).get()
     .then((snapshot) => {
       window.localStorage.setItem('user', JSON.stringify(snapshot.data()))
+      console.log(snapshot.data())
       dispatch({ type: GET_USER_SUCCESS, payload: snapshot.data() })
     })
     .catch((e) => console.log(e))
@@ -134,11 +135,12 @@ export const CreateGroupLogic = (groupName, friendEmails) => {
   }
 }
 
-export const GetGroup = () => (dispatch) => {
+export const GetGroup = (groupNames) => async (dispatch) => {
   var gCount = []
-  const groupNames = ['jobs', 'Dinner', 'Office']
-  groupNames.map((item) => {
-    firebase.firestore().collection('groups').doc(item).get()
+  console.log('groups ', groupNames)
+  // const groupNames = ['jobs', 'Dinner', 'Office']
+  groupNames.map(async (item) => {
+    await firebase.firestore().collection('groups').doc(item).get()
       .then((snapshot) => {
         gCount.push(snapshot.data().members.length)
       })
@@ -154,4 +156,29 @@ export const GetGroupMembers = () => (dispatch) => {
       dispatch({ type: 'GET_MEMBERS_SUCCESS', payload: snapshot.data().members })
     })
     .catch((e) => console.log(e))
+}
+
+export const UpdateProfile = (additionalData) => {
+  progress.start()
+  const user = auth?.currentUser
+  const db = firebase.firestore()
+  const userCollection = db.collection('users').doc(user?.email)
+  const {
+    displayName, phone, city, cnic, dob, currency, language,
+  } = additionalData
+  try {
+    userCollection.update({
+      displayName,
+      phone,
+      city,
+      cnic,
+      dob,
+      currency,
+      language,
+    })
+    progress.finish()
+  } catch (e) {
+    alert('Error ', e)
+    progress.finish()
+  }
 }

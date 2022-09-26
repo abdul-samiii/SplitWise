@@ -1,3 +1,4 @@
+import { UserCircleIcon } from '@heroicons/react/24/solid'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -48,8 +49,8 @@ const Friends = () => {
       <div className='h-64 w-1/2 overflow-scroll scrollbar-hide'>
         {
         data?.map((item) => (
-          <div key={Math.random()} className='m-4 flex hover:cursor-pointer w-fit'>
-            <img src={item} className='h-14 rounded-lg' alt='img' />
+          <div key={item} className='m-4 flex hover:cursor-pointer w-fit'>
+            <UserCircleIcon className='h-10 mt-1 rounded-lg' />
             <div className='ml-4 mt-1'>
               <h3 className='font-bold'>{item}</h3>
               <p className='font-thin text-sm'>your friend</p>

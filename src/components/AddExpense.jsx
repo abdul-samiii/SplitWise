@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 
 import { auth } from '../utils/Firebase'
 import { ActionCreators } from '../store'
+import { ImgUploader } from './ImgUploader'
 
 const AddExpense = ({ AddExpenseModal }) => {
   const dispatch = useDispatch()
@@ -13,6 +14,9 @@ const AddExpense = ({ AddExpenseModal }) => {
   const [searchFriend, setSearchFriend] = useState(false)
   const [expenseTitle, setExpenseTitle] = useState()
   const [expenseAmount, setExpenseAmount] = useState()
+  const [image, setImage] = useState()
+  const [file, setFile] = useState()
+  const [percent, setPercent] = useState()
 
   const userData = useSelector(item => item?.userReducer?.user)
 
@@ -41,11 +45,16 @@ const AddExpense = ({ AddExpenseModal }) => {
         title: expenseTitle,
         amount: expenseAmount,
         friendEmails: email,
+        image,
       })
     } else {
       alert('fill all fields')
     }
   }
+
+  const handleChange = (event) => setFile(event.target.files[0])
+
+  const upload = () => ImgUploader(file, setImage, setPercent)
 
   return (
     <div className='shadow-xl absolute h-[300px] w-[340px] md:h-[300px] left-0 md:left-auto md:w-[500px] md:ml-20 lg:ml-80 -mt-[5%] z-50 bg-white'>
@@ -87,9 +96,23 @@ const AddExpense = ({ AddExpenseModal }) => {
             value={expenseAmount}
             onChange={(item) => setExpenseAmount(item.target.value)}
           />
+          <div className='flex'>
+            <input type='file' onChange={handleChange} accept='/image/*' className='ml-4 mt-2' />
+            { percent > 0 && percent < 100 && <p>Uploading {percent}%...</p> }
+
+            <h3
+              className='font-bold text-[#427573] border-2 p-1 md:px-4
+              hover:cursor-pointer rounded-md text-center md:ml-16 ml-4 h-fit w-fit
+              hover:bg-[#a6f0ed] hover:text-white '
+              role='presentation'
+              onClick={upload}
+            >
+              Upload
+            </h3>
+          </div>
           <h3
             className='font-bold text-[#427573] border-2 p-1 md:px-4
-            hover:cursor-pointer rounded-md text-center md:ml-16 ml-4 h-fit w-fit mt-4
+            hover:cursor-pointer rounded-md text-center md:ml-32 ml-4 h-fit w-fit
             hover:bg-[#a6f0ed] hover:text-white '
             role='presentation'
             onClick={() => handleAddDebit()}
