@@ -1,3 +1,8 @@
+# Description
+splitwise is an expense sharing application. User can register himself and add friends by using the search functionality (search on the basis of email). User can also create a group in which he can add his friends. User can split the expense between him and his friend(one friend) by filling a simple form and uploading a bill(This will be split by formula total/2). User can also split the bill between multiple friends by creating a group, a form will pop up to him and after filling the form the bill will be split by formula total_bill/total_members. There are some other features in the app as well like edit profile and change password.
+There is a section which shows all the incomming and outgoing expenses. User can click one of the outgoiing expense and a modal will appear which'll have a settle button, by clicking the button, the amount'll be adjusted.
+Firebase is used on the backend
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
